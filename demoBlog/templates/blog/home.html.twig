@@ -1,0 +1,43 @@
+{% extends "base.html.twig"%}
+
+{# extend permet d'heriter de tous les blocks definitt dans le gabiret de base
+'base.html.twig'#}
+
+
+{# Le block 'body' fait référence au block 'body' déclaré dans le fichier  'base.html.twig' #}
+{# Le contenu du bloc 'body' est envoyé dans
+ le bloc 'body' de base.html.twig et l'ensemble est envoyé en réponse sur lz navigateur (base + template) #}
+
+
+{% block title %}
+    blog / Home
+{% endblock %}
+
+
+
+
+
+
+
+
+{% block body %}
+
+
+    <h1>bienvenue dans methodes synfonie</h1>
+
+{#
+{{ }} ---> appel l'interpolation (affichage de variable execution de fonction)
+{% %}    commande twig (boucle condition)
+#}
+
+    <h2>{{title}}</h2>
+
+        {% if age >18 %}
+            <p>Tu es majeur !!</p>
+
+        {% else %}
+            <p> tu es mineur</p>
+
+        {% endif %}
+
+{% endblock %}
