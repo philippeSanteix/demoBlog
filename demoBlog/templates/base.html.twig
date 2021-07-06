@@ -46,11 +46,12 @@
 
             <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-between">
-                {# path()} : fonction de TWIG permetant de generer une route, une adresse definie dans le controleur , on lui transmet en  argument le nom de la route @route ("", name=blog) #}
+                {# path()} : fonction de TWIG permetant de generer une route, une adresse definie dans 
+                le controleur , on lui transmet en  argument le nom de la route @route ("", name=blog) #}
                     <a class="p-2 link-secondary" href=""{{path('home')}}"><i class="bi bi-house-door"></i></a>
                     <a class="p-2 link-secondary" href="{{path('blog')}}">Blog</a>
                     <a class="p-2 link-secondary" href="#">U.S.</a>
-                    <a class="p-2 link-secondary" href="#">Technology</a>
+                    <a class="p-2 link-secondary" href="{{ path('blog_create') }}">Nouveau Poste</a>
                     <a class="p-2 link-secondary" href="#">Design</a>
                     <a class="p-2 link-secondary" href="#">Culture</a>
                     <a class="p-2 link-secondary" href="#">Business</a>
