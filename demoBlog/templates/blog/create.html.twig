@@ -7,4 +7,23 @@
 {% block body%}
     <h1 class="text-center my-4">creation d'un poste</h1>
 
+    <form methode="post" class="">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title">
+        </div>
+
+        <div class="mb-3">
+            <label for="contenu" class="form-label">contenu</label>
+            <textarea class="form-control" row="15" id="contenu" name="contenu"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" class="form-control" id="image" name="image">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+</form>
+
 {% endblock %}
