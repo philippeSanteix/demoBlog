@@ -10,8 +10,6 @@ blog / detail
 
   
 
-    {#<h1 class="display-4 fst-italic text-center my-4">Détails de l'article</h1>#}
-
     <div class="col-md-12">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
                     <div class="col-md-7 p-4 d-flex flex-column position-static">
@@ -19,8 +17,9 @@ blog / detail
                         <h3 class="mb-0">{{articleBDD.title }}</h3>
                             <div class="mb-1 text-muted">{{articleBDD.date |date("m/d/Y")}} à {{ articleBDD.date|date("H/i/s")}}
                             </div>
-                        <p class="card-text">{{articleBDD.contenu|raw }} [...]</p>
+                        <p class="card-text">{{articleBDD.contenu|raw }} </p>
                         <a href="{{ path('blog') }}" >retourZ'Ô Z'articles</a>
+                        <a href="{{ path('blog_edit',{'id': articleBDD.id}) }}" >modifier</a>
                     </div>
 
                     <div class="col-md-5 d-none d-lg-block">
