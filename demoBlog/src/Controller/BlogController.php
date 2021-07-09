@@ -4,7 +4,9 @@ namespace App\Controller;
 
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -114,9 +116,20 @@ class BlogController extends AbstractController
     * 
     * @Route("/blog/{id}", name="blog_show")
     */
-        public function show(Article $article): Response 
+        public function show(Article $article, Request $request): Response 
         {
-            return $this ->render('blog/show.html.twig', ['articleBDD'=>$article]);
+            //TRAITEMENT COMMENTAIRE ARTICLE
+            $comment = new Comment;
+            $formComment = $this->createForm(CommentType::class, $comment);
+
+            $formComment->handleRequest($request);
+            dump($request);
+            
+            
+            return $this ->render('blog/show.html.twig', [
+                'articleBDD'=>$article,
+                'formComment'=> $formComment -> createView()
+            ]);
         }
 
         

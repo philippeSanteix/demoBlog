@@ -3,7 +3,10 @@
 namespace App\DataFixtures;
 
 
+use DateTime;
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -11,22 +14,56 @@ class ArticlesFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for($i =1;$i <= 11 ; $i++)
-        {
-            $article = new Article;
-            $article->setTitle("Titre de l'article $i")
-                    ->setContenu("<p>lLe Lorem Ipsum est simplement du faux texte employé dans la composition 
-                    et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie 
-                    depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser
-                     un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles,
-                      mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit </p>")
-                    ->setImage("https://picsum.photos/seed/picsum/200/300")
-                    ->setDate(new \DateTime());
+      $faker = \Faker\Factory::create('fr_FR');
 
-            $manager -> persist($article);
-        }
-        $manager->flush();
-    }
+      for($cat = 1; $cat <=3; $cat++)
+      {
+          $category= new Category;
+          
+          $category -> setTitre($faker->word)
+                    -> setDescription($faker-> paragraph());
+                    
+          $manager->persist($category);
+      // creation de 4 à 10 articles par catégorie
+          for($art=1; $art <= mt_rand(4,10); $art++)
+          {
+            //$faker->paragraphs(5)retourne un array alors "join" permet d'extraire une chaine de paragraphe afin de constituer une chaine avec separateur 
+            $contenu = '<p>'. join($faker->paragraphs(5), '</p><p>' ) .'</p>';
+            
+            $article = new Article;
+            $article->setTitle($faker->sentence())
+                    ->setContenu($contenu)
+                    ->setImage($faker->imageUrl(600,600))
+                    ->setDate($faker->dateTimeBetween('-6months'))
+                    ->setCategory($category);
+            
+            $manager->persist($article);
+          
+              //creation de 4 à 10 commentaire pour chaque article
+              for($cmt=1; $cmt <= mt_rand(4,10); $cmt++)
+              {
+                
+                $now = new DateTime;
+                $interval=$now->diff($article->getDate());
+                $days = $interval->days;
+                $minimum = "-$days days";
+                
+                $contenu = '<p>'. join($faker->paragraphs(5), '</p><p>' ) .'</p>';
+
+                $comment = new Comment;
+                $comment ->setAuteur($faker->name)
+                          ->setCommentaire($contenu)
+                          ->setDate($faker->dateTimeBetween($minimum))
+                          ->setArticle($article);
+                $manager->persist($comment);
+
+              }
+
+          }
+      }
+
+      $manager->flush();
+  }
 }
 
 /* Un manager (ObjectManager) en Symfony est un classe permettant, entre autre,
